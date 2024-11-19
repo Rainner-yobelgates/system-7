@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Transaction;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\DB;
 
 class TransactionsProfitsMonthlyChart extends ChartWidget
 {
@@ -11,21 +12,22 @@ class TransactionsProfitsMonthlyChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Transaction::get()
-        ->groupBy(function($date) {
-            return $date->created_at->format('M');
-        });
-
+        $data = Transaction::whereYear('created_at', date('Y')) 
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total'))
+            ->groupBy('month')
+            ->get();
+        
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        $transactionData = [];
-
-        foreach ($months as $month) {
-            $transactionData[] = $data->has($month) ? $data->get($month)->sum('total') : 0;
+        
+        $transactionData = array_fill(0, 12, 0);
+        foreach ($data as $item) {
+            $transactionData[$item->month - 1] = $item->total;
         }
+        
         return [
             'datasets' => [
                 [
-                    'label' => 'Transaction',
+                    'label' => 'Produk',
                     'data' => $transactionData,
                 ],
             ],
