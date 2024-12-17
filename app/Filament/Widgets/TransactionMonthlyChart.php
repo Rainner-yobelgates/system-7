@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class TransactionMonthlyChart extends ChartWidget
 {
     protected static ?string $heading = 'Monthly Transactions for This Year';
+    protected static ?int $sort = 2;
 
     protected function getData(): array
     {
@@ -28,7 +29,7 @@ class TransactionMonthlyChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Produk',
+                    'label' => 'Transaction',
                     'data' => $transactionData,
                 ],
             ],
