@@ -35,12 +35,14 @@ class Settings extends Page
                         '4:3',
                         '1:1',
                     ]),
-                Textarea::make('address')
+                Textarea::make('alamat')
                 ->placeholder('Masukkan alamat')
                 ->label('Alamat Toko')
                 ->rows(5)
                 ->columnSpan(2),
                 TextInput::make('no_telp')
+                ->mask('9999-9999-9999')
+                ->rule('regex:/^[0-9\-]+$/')
                 ->placeholder('Masukkan nomor telepon')
                 ->label('No Telepon'),
             ])

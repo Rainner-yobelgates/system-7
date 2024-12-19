@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -19,6 +20,8 @@ use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\DatePicker;
+use Filament\Infolists\Components\Actions;
+use Filament\Infolists\Components\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 class TransactionResource extends Resource
@@ -45,7 +48,7 @@ class TransactionResource extends Resource
             TextEntry::make('harga_frame')
                 ->label('Harga Frame')
                 ->getStateUsing(function ($record) {
-                    return number_format($record->harga_lensa, 2, ',', '.');
+                    return number_format($record->harga_frame, 2, ',', '.');
                 }),
             TextEntry::make('harga_lensa')
                 ->label('Harga Lensa')
@@ -116,6 +119,14 @@ class TransactionResource extends Resource
                 }),
             TextEntry::make('status')
                 ->label('Status'),
+            Actions::make([
+                Action::make('pdf')
+                    ->label('Print PDF')
+                    ->icon('heroicon-m-document')
+                    ->action(function ($record) {
+                        return redirect()->route('generate.pdf', ['id' => $record->id]);
+                    }),
+            ]),
         ]);
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('logo')->nullable();
             $table->string('no_telp', 15)->nullable();
-            $table->text('address')->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
