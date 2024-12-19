@@ -21,6 +21,7 @@ class CashOutResource extends Resource
     protected static ?string $model = CashOut::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
