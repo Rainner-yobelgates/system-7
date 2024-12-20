@@ -25,21 +25,22 @@ class Setting extends Model
             }
         });
     }
-
     private function renameLogoFile()
     {
-        if ($this->isDirty('logo') && $this->logo !== null) {
+        if ($this->isDirty('logo') && $this->logo !== $this->getOriginal('logo')) {
             $extension = pathinfo($this->logo, PATHINFO_EXTENSION);
-            $newFileName = 'logo.' . $extension;
-
+            $newFileName = 'logo/logo.' . $extension;
+        
             if (Storage::disk('public')->exists($this->logo)) {
-                $oldLogo = $this->getOriginal('logo');
+                $oldLogo = $this->getOriginal('logo'); // Ambil logo lama
                 if ($oldLogo !== null && Storage::disk('public')->exists($oldLogo)) {
                     Storage::disk('public')->delete($oldLogo);
                 }
                 Storage::disk('public')->move($this->logo, $newFileName);
                 $this->logo = $newFileName;
+                $this->saveQuietly();
             }
         }
+        
     }
 }

@@ -8,7 +8,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
@@ -20,6 +19,11 @@ class Settings extends Page
 
     protected static string $view = 'filament.pages.settings';
     protected static ?int $navigationSort = 4;
+
+    public function mount(): void
+    {
+        $this->form->fill(Setting::first()?->toArray());
+    }
 
     public function form(Form $form): Form
     {
@@ -52,7 +56,7 @@ class Settings extends Page
     {
         return [
             Action::make('save')
-                ->label('Save')
+                ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
                 ->submit('save'),
         ];
     }
