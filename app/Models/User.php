@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return !(is_null($this->user_role_id));
+        return true;
     }
     
     /**
