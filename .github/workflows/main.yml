@@ -34,8 +34,7 @@ jobs:
           tags: docker.artodigital.id/opticseven:latest
           push: true
 
-      - name: Deploy Stage
-        if: github.ref == 'refs/heads/stage'
+      - name: Deploy Main
         run: |
           curl -X POST \
           -H "Content-Type: application/json" \
