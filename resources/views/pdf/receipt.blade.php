@@ -28,12 +28,22 @@
             vertical-align: top;
         }
 
-        table td:first-child {
+        .reg-table td:first-child {
             width: 50%;
         }
 
-        table td:last-child {
+        .reg-table td:last-child {
             width: 50%;
+        }
+
+        .pro-table th, .pro-table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center; /* Mengatur teks agar berada di tengah */
+        }
+
+        .pro-table th {
+            background-color: #f2f2f2; /* Menambahkan warna latar belakang untuk header */
         }
 
         label {
@@ -97,7 +107,7 @@
             </div>
         </div>
 
-        <table>
+        <table class="reg-table">
             <tr>
                 <td><label>Nama Pelanggan:</label></td>
                 <td>{{ $data->nama ?? '' }}</td>
@@ -120,66 +130,52 @@
             </tr>
             <tr>
                 <td><label>Harga Frame:</label></td>
-                <td>Rp. {{ number_format($data->harga_frame, 2, ',', '.') ?? '' }}</td>
+                <td>Rp. {{ number_format($data->harga_frame, 2, ',', '.') ?? '0' }}</td>
             </tr>
             <tr>
                 <td><label>Harga Lensa:</label></td>
-                <td>Rp. {{ number_format($data->harga_lensa, 2, ',', '.') ?? '' }}</td>
+                <td>Rp. {{ number_format($data->harga_lensa, 2, ',', '.') ?? '0' }}</td>
             </tr>
         </table>
-
-        <div class="section-title">Right Eye~</div>
-        <table>
+        <table class="pro-table">
             <tr>
-                <td><label>SPH:</label></td>
+                <td></td>
+                <td>SPH</td>
+                <td>CYL</td>
+                <td>AXIS</td>
+                <td>ADD</td>
+                <td>PD</td>
+            </tr>
+            <tr>
+                <td>R</td>
                 <td>{{ $data->r_sph ?? '0' }}</td>
-                <td><label>CYL:</label></td>
                 <td>{{ $data->r_cyl ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td><label>AXIS:</label></td>
                 <td>{{ $data->r_axis ?? '0' }}</td>
-                <td><label>ADD:</label></td>
                 <td>{{ $data->r_add ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td><label>PD:</label></td>
                 <td>{{ $data->r_pd ?? '0' }}</td>
             </tr>
-        </table>
-
-        <div class="section-title">Left Eye~</div>
-        <table>
             <tr>
-                <td><label>SPH:</label></td>
+                <td>L</td>
                 <td>{{ $data->l_sph ?? '0' }}</td>
-                <td><label>CYL:</label></td>
                 <td>{{ $data->l_cyl ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td><label>AXIS:</label></td>
                 <td>{{ $data->l_axis ?? '0' }}</td>
-                <td><label>ADD:</label></td>
                 <td>{{ $data->l_add ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td><label>PD:</label></td>
                 <td>{{ $data->l_pd ?? '0' }}</td>
             </tr>
         </table>
 
-        <table>
+        <table class="reg-table">
             <tr>
                 <td><label>Total Harga:</label></td>
-                <td>Rp. {{ number_format($data->total, 2, ',', '.') ?? '' }}</td>
+                <td>Rp. {{ number_format($data->total, 2, ',', '.') ?? '0' }}</td>
             </tr>
             <tr>
                 <td><label>Jumlah Bayar/DP:</label></td>
-                <td>Rp. {{ number_format($data->bayar, 2, ',', '.') ?? '' }}</td>
+                <td>Rp. {{ number_format($data->bayar, 2, ',', '.') ?? '0' }}</td>
             </tr>
             <tr>
                 <td><label>Jumlah Kekurangan Pembayaran:</label></td>
-                <td>Rp. {{ number_format($data->kurang, 2, ',', '.') ?? '' }}</td>
+                <td>Rp. {{ number_format($data->kurang, 2, ',', '.') ?? '0' }}</td>
             </tr>
             <tr>
                 <td><label>Status:</label></td>

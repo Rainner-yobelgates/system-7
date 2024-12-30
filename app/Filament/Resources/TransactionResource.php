@@ -48,12 +48,12 @@ class TransactionResource extends Resource
             TextEntry::make('harga_frame')
                 ->label('Harga Frame')
                 ->getStateUsing(function ($record) {
-                    return number_format($record->harga_frame, 2, ',', '.');
+                    return number_format($record->harga_frame ?? 0, 2, ',', '.');
                 }),
             TextEntry::make('harga_lensa')
                 ->label('Harga Lensa')
                 ->getStateUsing(function ($record) {
-                    return number_format($record->harga_lensa, 2, ',', '.');
+                    return number_format($record->harga_lensa ?? 0, 2, ',', '.');
                 }),
             Group::make()
             ->label('test')
@@ -173,19 +173,24 @@ class TransactionResource extends Resource
                 ->schema([
                     TextInput::make('r_sph')
                     ->label('SPH')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('r_cyl')
                     ->label('CYL')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('r_axis')
                     ->label('AXIS')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('r_add')
                     ->label('ADD')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('r_pd')
                     ->label('PD')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                 ]),
                 Section::make('Left Eye')
                 ->columns([
@@ -194,19 +199,24 @@ class TransactionResource extends Resource
                 ->schema([
                     TextInput::make('l_sph')
                     ->label('SPH')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('l_cyl')
                     ->label('CYL')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('l_axis')
                     ->label('AXIS')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('l_add')
                     ->label('ADD')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                     TextInput::make('l_pd')
                     ->label('PD')
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->rule('regex:/^[+-]?\d+(\,\d+)?$/'),
                 ]),
                 TextInput::make('total')
                     ->label('Total Harga')
