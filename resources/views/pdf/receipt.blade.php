@@ -86,43 +86,45 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <img src="{{ public_path('storage/' . $setting->logo) }}" alt="Logo">
+                @if(isset($setting->logo))
+                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo">
+                @endif
             </div>
     
             <div>
-                <h4 style="margin-bottom: 0%;margin-top: 5px">{{$setting->alamat}}</h4>
-                <h4 style="margin-top: 10px">{{$setting->no_telp}}</h4>
+                <h4 style="margin-bottom: 0%;margin-top: 5px">{{$setting->alamat ?? ''}}</h4>
+                <h4 style="margin-top: 10px">{{$setting->no_telp ?? ''}}</h4>
             </div>
         </div>
 
         <table>
             <tr>
                 <td><label>Nama Pelanggan:</label></td>
-                <td>{{ $data->nama }}</td>
+                <td>{{ $data->nama ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>No Telepon:</label></td>
-                <td>{{ $data->no_telp }}</td>
+                <td>{{ $data->no_telp ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Alamat:</label></td>
-                <td>{{ $data->alamat }}</td>
+                <td>{{ $data->alamat ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Merk Frame:</label></td>
-                <td>{{ $data->merk_frame }}</td>
+                <td>{{ $data->merk_frame ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Jenis Lensa:</label></td>
-                <td>{{ $data->jenis_lensa }}</td>
+                <td>{{ $data->jenis_lensa ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Harga Frame:</label></td>
-                <td>Rp. {{ number_format($data->harga_frame, 2, ',', '.') }}</td>
+                <td>Rp. {{ number_format($data->harga_frame, 2, ',', '.') ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Harga Lensa:</label></td>
-                <td>Rp. {{ number_format($data->harga_lensa, 2, ',', '.') }}</td>
+                <td>Rp. {{ number_format($data->harga_lensa, 2, ',', '.') ?? '' }}</td>
             </tr>
         </table>
 
@@ -169,19 +171,19 @@
         <table>
             <tr>
                 <td><label>Total Harga:</label></td>
-                <td>Rp. {{ number_format($data->total, 2, ',', '.') }}</td>
+                <td>Rp. {{ number_format($data->total, 2, ',', '.') ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Jumlah Bayar/DP:</label></td>
-                <td>Rp. {{ number_format($data->bayar, 2, ',', '.') }}</td>
+                <td>Rp. {{ number_format($data->bayar, 2, ',', '.') ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Jumlah Kekurangan Pembayaran:</label></td>
-                <td>Rp. {{ number_format($data->kurang, 2, ',', '.') }}</td>
+                <td>Rp. {{ number_format($data->kurang, 2, ',', '.') ?? '' }}</td>
             </tr>
             <tr>
                 <td><label>Status:</label></td>
-                <td>{{ $data->status }}</td>
+                <td>{{ $data->status ?? '' }}</td>
             </tr>
         </table>
 
