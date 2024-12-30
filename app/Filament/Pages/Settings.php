@@ -7,13 +7,17 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
 
-class Settings extends Page
+class Settings extends Page implements HasForms
+
 {
+    use InteractsWithForms;
+
     public ?array $data = [];
     protected static ?string $navigationIcon = 'heroicon-o-wrench';
 
@@ -40,15 +44,15 @@ class Settings extends Page
                         '1:1',
                     ]),
                 Textarea::make('alamat')
-                ->placeholder('Masukkan alamat')
-                ->label('Alamat Toko')
-                ->rows(5)
-                ->columnSpan(2),
+                    ->placeholder('Masukkan alamat')
+                    ->label('Alamat Toko')
+                    ->rows(5)
+                    ->columnSpan(2),
                 TextInput::make('no_telp')
-                ->mask('9999-9999-9999')
-                ->rule('regex:/^[0-9\-]+$/')
-                ->placeholder('Masukkan nomor telepon')
-                ->label('No Telepon'),
+                    ->mask('9999-9999-9999')
+                    ->rule('regex:/^[0-9\-]+$/')
+                    ->placeholder('Masukkan nomor telepon')
+                    ->label('No Telepon'),
             ])
             ->statePath('data');
     }
