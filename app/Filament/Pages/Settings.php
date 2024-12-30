@@ -29,7 +29,7 @@ class Settings extends Page implements HasForms
     {
         $this->form->fill(Setting::first()?->toArray());
     }
-
+    
     public function form(Form $form): Form
     {
         return $form
@@ -38,6 +38,7 @@ class Settings extends Page implements HasForms
                     ->image()
                     ->directory('logo')
                     ->imageEditor()
+                    ->maxSize(2048)
                     ->imageEditorAspectRatios([
                         null,
                         '16:9',

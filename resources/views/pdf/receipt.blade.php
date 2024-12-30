@@ -97,7 +97,7 @@
         <div class="header">
             <div class="logo-container">
                 @if(isset($setting->logo))
-                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo">
+                    <img src="{{ public_path('storage/' . $setting->logo) }}" alt="Logo">
                 @endif
             </div>
     
