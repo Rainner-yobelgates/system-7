@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CashOutResource\Pages;
-use App\Filament\Resources\CashOutResource\RelationManagers;
-use App\Models\CashOut;
+use App\Filament\Resources\CashInResource\Pages;
+use App\Filament\Resources\CashInResource\RelationManagers;
+use App\Models\CashIn;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -16,20 +16,20 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CashOutResource extends Resource
+class CashInResource extends Resource
 {
-    protected static ?string $model = CashOut::class;
+    protected static ?string $model = CashIn::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('expense')
-                    ->label('Expense')
-                    ->placeholder('Masukkan pengeluaran')
+                TextInput::make('items')
+                    ->label('Items')
+                    ->placeholder('Masukkan barang')
                     ->required(),
                     TextInput::make('amount')
                     ->label('Amount')
@@ -45,7 +45,7 @@ class CashOutResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('expense')
+                TextColumn::make('items')
                 ->searchable(),
                 TextColumn::make('amount')
                 ->money('IDR'),
@@ -73,9 +73,9 @@ class CashOutResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCashOuts::route('/'),
-            'create' => Pages\CreateCashOut::route('/create'),
-            'edit' => Pages\EditCashOut::route('/{record}/edit'),
+            'index' => Pages\ListCashIns::route('/'),
+            'create' => Pages\CreateCashIn::route('/create'),
+            'edit' => Pages\EditCashIn::route('/{record}/edit'),
         ];
     }
 }

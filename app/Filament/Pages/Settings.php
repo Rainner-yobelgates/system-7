@@ -23,7 +23,7 @@ class Settings extends Page implements HasForms
     protected static ?string $navigationIcon = 'heroicon-o-wrench';
 
     protected static string $view = 'filament.pages.settings';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
 
     public function mount(): void
     {

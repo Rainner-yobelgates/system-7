@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Transaction;
 use Filament\Widgets\ChartWidget;
@@ -17,31 +18,45 @@ class TransactionsProfitsMonthlyChart extends ChartWidget
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total'))
             ->groupBy('month')
             ->get();
+
         $expenseData = CashOut::whereYear('created_at', date('Y'))
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as total'))
             ->groupBy('month')
             ->get();
+
+        $cashinData = CashIn::whereYear('created_at', date('Y'))
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as total'))
+            ->groupBy('month')
+            ->get();
+
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        
+
         $revenueArray = array_fill(0, 12, 0);
         $expenseArray = array_fill(0, 12, 0);
+        $cashinArray = array_fill(0, 12, 0);
         $profitArray = array_fill(0, 12, 0);
 
         foreach ($revenueData as $item) {
             $revenueArray[$item->month - 1] = $item->total;
         }
+
         foreach ($expenseData as $item) {
             $expenseArray[$item->month - 1] = $item->total;
         }
-        for ($i = 0; $i < 12; $i++) {
-            $profitArray[$i] = $revenueArray[$i] - $expenseArray[$i];
+
+        foreach ($cashinData as $item) {
+            $cashinArray[$item->month - 1] = $item->total;
         }
-        
+
+        for ($i = 0; $i < 12; $i++) {
+            $totalRevenueArray[$i] = $revenueArray[$i] + $cashinArray[$i];
+            $profitArray[$i] = $totalRevenueArray[$i] - $expenseArray[$i];
+        }
         return [
             'datasets' => [
                 [
                     'label' => 'Income',
-                    'data' => $revenueArray,
+                    'data' => $totalRevenueArray,
                     'backgroundColor' => 'rgba(76, 175, 80, 0.25)',
                     'borderColor' => '#4CAF50',
                 ],

@@ -126,6 +126,12 @@ class TransactionResource extends Resource
                     ->action(function ($record) {
                         return redirect()->route('generate.pdf', ['id' => $record->id]);
                     }),
+                Action::make('wa')
+                    ->label('Whatsapp')
+                    ->icon('heroicon-o-phone-arrow-down-left')
+                    ->color('success')
+                    ->url(fn ($record) => 'https://wa.me/62' . ltrim(str_replace('-', '', $record->no_telp), '0')) // Redirect ke WhatsApp
+                    ->openUrlInNewTab(), 
             ]),
         ]);
     }
