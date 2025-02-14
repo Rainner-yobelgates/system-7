@@ -119,6 +119,8 @@ class TransactionResource extends Resource
                 }),
             TextEntry::make('status')
                 ->label('Status'),
+            TextEntry::make('note')
+                ->columnSpan('full'),
             Actions::make([
                 Action::make('pdf')
                     ->label('Print PDF')
@@ -246,7 +248,11 @@ class TransactionResource extends Resource
                     ->options([
                         'Belum Diambil' => 'Belum Diambil',
                         'Diambil' => 'Diambil',
-                    ])->native(false)->required()
+                    ])->native(false)->required(),
+                    Textarea::make('note')
+                    ->placeholder('Masukkan catatan')
+                    ->rows(4)
+                    ->columnSpan('full'),
             ]);
     }
 

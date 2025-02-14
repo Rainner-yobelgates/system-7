@@ -85,7 +85,7 @@
         }
 
         .logo-container img {
-            width: 50%;
+            width: 40%;
         }
         .header{
             text-align: center;
@@ -104,6 +104,7 @@
             <div>
                 <h4 style="margin-bottom: 0%;margin-top: 5px">{{$setting->alamat ?? ''}}</h4>
                 <h4 style="margin-top: 10px">{{$setting->no_telp ?? ''}}</h4>
+                <h4 style="margin-top: 10px">{{ $setting->created_at ? $setting->created_at->format('d M Y H:i') : '' }}</h4>
             </div>
         </div>
 
@@ -180,6 +181,10 @@
             <tr>
                 <td><label>Status:</label></td>
                 <td>{{ $data->status ?? '' }}</td>
+            </tr>
+            <tr>
+                <td><label>Note:</label></td>
+                <td>{{ $data->note ?? '' }}</td>
             </tr>
         </table>
 
