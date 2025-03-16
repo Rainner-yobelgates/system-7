@@ -104,7 +104,7 @@
             <div>
                 <h4 style="margin-bottom: 0%;margin-top: 5px">{{$setting->alamat ?? ''}}</h4>
                 <h4 style="margin-top: 10px">{{$setting->no_telp ?? ''}}</h4>
-                <h4 style="margin-top: 10px">{{ $data->created_at ? $setting->created_at->format('d M Y H:i') : '' }}</h4>
+                <h4 style="margin-top: 10px">{{ $data->created_at ? $data->created_at->format('d M Y H:i') : '' }}</h4>
             </div>
         </div>
 
