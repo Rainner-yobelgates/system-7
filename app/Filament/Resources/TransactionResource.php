@@ -148,7 +148,7 @@ class TransactionResource extends Resource
                     ->required(),
                 TextInput::make('no_telp')
                     ->label('No Telepon')
-                    ->mask('9999-9999-9999')
+                    ->mask('9999-9999-99999')
                     ->rule('regex:/^[0-9\-]+$/')
                     ->placeholder('Masukkan nomor telepon')
                     ->required(),
