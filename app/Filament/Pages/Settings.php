@@ -34,17 +34,21 @@ class Settings extends Page implements HasForms
     {
         return $form
             ->schema([
-                FileUpload::make('logo')
-                    ->image()
-                    ->directory('logo')
-                    ->imageEditor()
-                    ->maxSize(2048)
-                    ->imageEditorAspectRatios([
-                        null,
-                        '16:9',
-                        '4:3',
-                        '1:1',
-                    ]),
+                     FileUpload::make('logo')
+    ->disk('public')
+    ->directory('logo')
+    ->image()
+    ->maxSize(2048)
+    ->acceptedFileTypes([
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+    ])
+    ->rules([
+        'image',
+        'mimes:jpg,jpeg,png,webp',
+    ])
+    ->preserveFilenames(false), 
                 Textarea::make('alamat')
                     ->placeholder('Masukkan alamat')
                     ->label('Alamat Toko')
