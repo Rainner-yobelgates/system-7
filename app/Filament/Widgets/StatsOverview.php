@@ -14,11 +14,12 @@ class StatsOverview extends BaseWidget
     protected static ?int $sort = 1;
     protected function getStats(): array
     {
-        $getYearTransaction = Transaction::whereYear('created_at', date('Y'))->count();
-        $getYearIncome = Transaction::whereYear('created_at', date('Y'))->sum('total');
-        $getYearCashIn = CashIn::whereYear('created_at', date('Y'))->sum('amount');
-        $getYearCashOut = CashOut::whereYear('created_at', date('Y'))->sum('amount');
-        $getTransIncomplete = Transaction::where('status', 'Belum Diambil')->whereYear('created_at', date('Y'))->count();
+        $year = $this->filters['year'] ?? date('Y');
+        $getYearTransaction = Transaction::whereYear('created_at', $year)->count();
+        $getYearIncome = Transaction::whereYear('created_at', $year)->sum('total');
+        $getYearCashIn = CashIn::whereYear('created_at', $year)->sum('amount');
+        $getYearCashOut = CashOut::whereYear('created_at', $year)->sum('amount');
+        $getTransIncomplete = Transaction::where('status', 'Belum Diambil')->whereYear('created_at', $year)->count();
         return [
             Stat::make('Total Transaction', $getYearTransaction)->description('Total transaction in this year')->descriptionIcon('heroicon-m-information-circle', IconPosition::Before),
             Stat::make('Total Profits (Income: ' . number_format($getYearIncome + $getYearCashIn) . ')', number_format(($getYearIncome + $getYearCashIn) - $getYearCashOut))->description("Total profits in this year")->descriptionIcon('heroicon-m-information-circle', IconPosition::Before),

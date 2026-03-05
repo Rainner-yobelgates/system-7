@@ -14,7 +14,9 @@ class TransactionMonthlyChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Transaction::whereYear('created_at', date('Y')) 
+        $year = $this->filters['year'] ?? date('Y');
+
+        $data = Transaction::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as total'))
             ->groupBy('month')
             ->get();

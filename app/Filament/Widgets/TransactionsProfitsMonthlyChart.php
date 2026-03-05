@@ -14,17 +14,19 @@ class TransactionsProfitsMonthlyChart extends ChartWidget
     protected static ?int $sort = 3;
     protected function getData(): array
     {
-        $revenueData = Transaction::whereYear('created_at', date('Y')) 
+        $year = $this->filters['year'] ?? date('Y');
+
+        $revenueData = Transaction::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total'))
             ->groupBy('month')
             ->get();
 
-        $expenseData = CashOut::whereYear('created_at', date('Y'))
+        $expenseData = CashOut::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as total'))
             ->groupBy('month')
             ->get();
 
-        $cashinData = CashIn::whereYear('created_at', date('Y'))
+        $cashinData = CashIn::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as total'))
             ->groupBy('month')
             ->get();

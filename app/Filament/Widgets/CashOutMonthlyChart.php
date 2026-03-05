@@ -13,7 +13,9 @@ class CashOutMonthlyChart extends ChartWidget
     protected static ?int $sort = 4;
     protected function getData(): array
     {
-        $data = CashOut::whereYear('created_at', date('Y')) 
+        $year = $this->filters['year'] ?? date('Y');
+
+        $data = CashOut::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as amount'))
             ->groupBy('month')
             ->get();
