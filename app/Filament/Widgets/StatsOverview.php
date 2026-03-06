@@ -6,11 +6,14 @@ use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Transaction;
 use Filament\Support\Enums\IconPosition;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends BaseWidget
 {
+    use InteractsWithPageFilters;
+    
     protected static ?int $sort = 1;
     protected function getStats(): array
     {

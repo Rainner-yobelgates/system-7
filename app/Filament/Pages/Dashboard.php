@@ -21,7 +21,7 @@ class Dashboard extends BaseDashboard
                         ->mapWithKeys(fn ($year) => [$year => $year])
                 )
                 ->default(now()->year)
-                ->native(false),
+                ->native(true),
         ]);
     }
 }
