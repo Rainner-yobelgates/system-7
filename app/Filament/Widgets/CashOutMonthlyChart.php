@@ -4,10 +4,13 @@ namespace App\Filament\Widgets;
 
 use App\Models\CashOut;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
 
 class CashOutMonthlyChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Monthly Cash Out for This Year';
 
     protected static ?int $sort = 4;

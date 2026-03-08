@@ -5,10 +5,13 @@ namespace App\Filament\Widgets;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
 
 class TransactionMonthlyChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Monthly Transactions for This Year';
     protected static ?int $sort = 2;
 

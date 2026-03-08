@@ -6,10 +6,13 @@ use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Transaction;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
 
 class TransactionsProfitsMonthlyChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Monthly Profits for This Year';
     protected static ?int $sort = 3;
     protected function getData(): array
