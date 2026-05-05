@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PdfController extends Controller
 {
     public function generateReceipt($id)
     {
-        $data = Transaction::find($id);
+        $data = Transaction::findOrFail($id);
         $setting = Setting::first();
         $pdf = Pdf::loadView('pdf.receipt', compact('data', 'setting'));
-        return $pdf->download('receipt_'.$data->nama.'.pdf');
+
+        $fileName = 'receipt_' . Str::slug((string) $data->nama, '_') . '.pdf';
+
+        return $pdf->download($fileName);
     }
 }

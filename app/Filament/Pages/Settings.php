@@ -16,7 +16,6 @@ use Filament\Support\Exceptions\Halt;
 use Illuminate\Support\Facades\Cache;
 
 class Settings extends Page implements HasForms
-
 {
     use InteractsWithForms;
 
@@ -35,21 +34,21 @@ class Settings extends Page implements HasForms
     {
         return $form
             ->schema([
-                     FileUpload::make('logo')
-    ->disk('public')
-    ->directory('logo')
-    ->image()
-    ->maxSize(2048)
-    ->acceptedFileTypes([
-        'image/jpeg',
-        'image/png',
-        'image/webp',
-    ])
-    ->rules([
-        'image',
-        'mimes:jpg,jpeg,png,webp',
-    ])
-    ->preserveFilenames(false), 
+                FileUpload::make('logo')
+                    ->disk('public')
+                    ->directory('logo')
+                    ->image()
+                    ->maxSize(2048)
+                    ->acceptedFileTypes([
+                        'image/jpeg',
+                        'image/png',
+                        'image/webp',
+                    ])
+                    ->rules([
+                        'image',
+                        'mimes:jpg,jpeg,png,webp',
+                    ])
+                    ->preserveFilenames(false),
                 Textarea::make('alamat')
                     ->placeholder('Masukkan alamat')
                     ->label('Alamat Toko')
@@ -63,6 +62,7 @@ class Settings extends Page implements HasForms
             ])
             ->statePath('data');
     }
+
     protected function getFormActions(): array
     {
         return [
@@ -80,6 +80,7 @@ class Settings extends Page implements HasForms
                 ['id' => 1],
                 $data
             );
+
             Cache::forget('filament.admin.brand_logo_url');
         } catch (Halt $exception) {
             return;
