@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
+use Illuminate\Support\Facades\Cache;
 
 class Settings extends Page implements HasForms
 
@@ -79,6 +80,7 @@ class Settings extends Page implements HasForms
                 ['id' => 1],
                 $data
             );
+            Cache::forget('filament.admin.brand_logo_url');
         } catch (Halt $exception) {
             return;
         }
