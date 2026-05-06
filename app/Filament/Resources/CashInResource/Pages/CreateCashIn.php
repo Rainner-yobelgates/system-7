@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\CashInResource\Pages;
 
 use App\Filament\Resources\CashInResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCashIn extends CreateRecord

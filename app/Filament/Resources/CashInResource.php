@@ -2,31 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CashInResource\Pages;
-use App\Filament\Resources\CashInResource\RelationManagers;
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\CashInResource\Pages\ListCashIns;
+use App\Filament\Resources\CashInResource\Pages\CreateCashIn;
+use App\Filament\Resources\CashInResource\Pages\EditCashIn;
 use App\Models\CashIn;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CashInResource extends Resource
 {
     protected static ?string $model = CashIn::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-currency-dollar';
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('items')
                     ->label('Items')
                     ->placeholder('Masukkan barang')
@@ -53,12 +54,12 @@ class CashInResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])->defaultSort('created_at', 'desc');
     }
@@ -73,9 +74,9 @@ class CashInResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCashIns::route('/'),
-            'create' => Pages\CreateCashIn::route('/create'),
-            'edit' => Pages\EditCashIn::route('/{record}/edit'),
+            'index' => ListCashIns::route('/'),
+            'create' => CreateCashIn::route('/create'),
+            'edit' => EditCashIn::route('/{record}/edit'),
         ];
     }
 }

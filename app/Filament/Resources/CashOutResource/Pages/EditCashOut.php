@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\CashOutResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\CashOutResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditCashOut extends EditRecord
@@ -13,7 +13,7 @@ class EditCashOut extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

@@ -13,11 +13,11 @@ class TransactionsProfitsMonthlyChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?string $heading = 'Monthly Profits for This Year';
+    protected ?string $heading = 'Monthly Profits for This Year';
     protected static ?int $sort = 3;
     protected function getData(): array
     {
-        $year = $this->filters['year'] ?? date('Y');
+        $year = $this->pageFilters['year'] ?? date('Y');
 
         $revenueData = Transaction::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as total'))

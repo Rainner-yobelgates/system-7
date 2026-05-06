@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\CashOutResource\Pages;
 
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\CashOutResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListCashOuts extends ListRecords
@@ -13,7 +13,7 @@ class ListCashOuts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

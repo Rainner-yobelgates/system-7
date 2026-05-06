@@ -11,12 +11,12 @@ class CashOutMonthlyChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?string $heading = 'Monthly Cash Out for This Year';
+    protected ?string $heading = 'Monthly Cash Out for This Year';
 
     protected static ?int $sort = 4;
     protected function getData(): array
     {
-        $year = $this->filters['year'] ?? date('Y');
+        $year = $this->pageFilters['year'] ?? date('Y');
 
         $data = CashOut::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as amount'))

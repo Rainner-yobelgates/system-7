@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Forms\Components\Select;
@@ -11,9 +11,9 @@ class Dashboard extends BaseDashboard
 {
     use HasFiltersForm;
 
-    public function filtersForm(Form $form): Form
+    public function filtersForm(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->components([
             Select::make('year')
                 ->label('Tahun')
                 ->options(

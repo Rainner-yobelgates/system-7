@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Schemas\Schema;
 use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -9,7 +10,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Exceptions\Halt;
@@ -20,9 +20,9 @@ class Settings extends Page implements HasForms
     use InteractsWithForms;
 
     public ?array $data = [];
-    protected static ?string $navigationIcon = 'heroicon-o-wrench';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-wrench';
 
-    protected static string $view = 'filament.pages.settings';
+    protected string $view = 'filament.pages.settings';
     protected static ?int $navigationSort = 5;
 
     public function mount(): void
@@ -30,10 +30,10 @@ class Settings extends Page implements HasForms
         $this->form->fill(Setting::first()?->toArray());
     }
     
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 FileUpload::make('logo')
                     ->disk('public')
                     ->directory('logo')

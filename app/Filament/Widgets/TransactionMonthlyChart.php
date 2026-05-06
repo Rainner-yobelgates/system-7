@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Transaction;
-use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +11,12 @@ class TransactionMonthlyChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?string $heading = 'Monthly Transactions for This Year';
+    protected ?string $heading = 'Monthly Transactions for This Year';
     protected static ?int $sort = 2;
 
     protected function getData(): array
     {
-        $year = $this->filters['year'] ?? date('Y');
+        $year = $this->pageFilters['year'] ?? date('Y');
 
         $data = Transaction::whereYear('created_at', $year)
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as total'))

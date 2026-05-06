@@ -17,7 +17,7 @@ class StatsOverview extends BaseWidget
     protected static ?int $sort = 1;
     protected function getStats(): array
     {
-        $year = $this->filters['year'] ?? date('Y');
+        $year = $this->pageFilters['year'] ?? date('Y');
         $getYearTransaction = Transaction::whereYear('created_at', $year)->count();
         $getYearIncome = Transaction::whereYear('created_at', $year)->sum('total');
         $getYearCashIn = CashIn::whereYear('created_at', $year)->sum('amount');

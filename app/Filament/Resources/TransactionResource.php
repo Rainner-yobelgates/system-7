@@ -2,39 +2,44 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TransactionResource\Pages;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Actions;
+use Filament\Actions\Action;
+use Filament\Schemas\Components\Section;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\TransactionResource\Pages\ListTransactions;
+use App\Filament\Resources\TransactionResource\Pages\CreateTransaction;
+use App\Filament\Resources\TransactionResource\Pages\ViewTransaction;
+use App\Filament\Resources\TransactionResource\Pages\EditTransaction;
 use App\Models\Transaction;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Infolists\Infolist;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\DatePicker;
-use Filament\Infolists\Components\Actions;
-use Filament\Infolists\Components\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?int $navigationSort = 2;
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-        ->schema([
+        return $schema
+        ->components([
             TextEntry::make('nama')
                 ->label('Nama Pelanggan'),
             TextEntry::make('no_telp')
@@ -56,12 +61,12 @@ class TransactionResource extends Resource
                     return number_format($record->harga_lensa ?? 0, 2, ',', '.');
                 }),
             Group::make()
-            ->label('test')
             ->columns(6)
             ->columnSpan('full')
             ->schema([
-                TextEntry::make('')
+                TextEntry::make('right_eye_heading')
                 ->label('Right Eye')
+                ->getStateUsing(fn () => '')
                 ->columnSpan('full'),
                 TextEntry::make('r_sph')
                     ->label('SPH')
@@ -83,8 +88,9 @@ class TransactionResource extends Resource
             ->columns(6)
             ->columnSpan('full')
             ->schema([
-                TextEntry::make('')
+                TextEntry::make('left_eye_heading')
                 ->label('Left Eye')
+                ->getStateUsing(fn () => '')
                 ->columnSpan('full'),
                 TextEntry::make('l_sph')
                     ->label('SPH')
@@ -138,10 +144,10 @@ class TransactionResource extends Resource
         ]);
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('nama')
                     ->label('Nama Pelanggan')
                     ->placeholder('Masukkan nama pelanggan')
@@ -287,7 +293,7 @@ class TransactionResource extends Resource
                     'Diambil' => 'Diambil',
                 ]),
                 Filter::make('created_at')
-                ->form([
+                ->schema([
                     DatePicker::make('created_from'),
                     DatePicker::make('created_until'),
                 ])
@@ -303,13 +309,13 @@ class TransactionResource extends Resource
                         );
                 })
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])->defaultSort('created_at', 'desc');
     }
@@ -324,10 +330,10 @@ class TransactionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTransactions::route('/'),
-            'create' => Pages\CreateTransaction::route('/create'),
-            'view' => Pages\ViewTransaction::route('/{record}'),
-            'edit' => Pages\EditTransaction::route('/{record}/edit'),
+            'index' => ListTransactions::route('/'),
+            'create' => CreateTransaction::route('/create'),
+            'view' => ViewTransaction::route('/{record}'),
+            'edit' => EditTransaction::route('/{record}/edit'),
         ];
     }
 }

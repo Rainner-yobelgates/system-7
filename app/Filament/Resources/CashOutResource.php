@@ -2,31 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CashOutResource\Pages;
-use App\Filament\Resources\CashOutResource\RelationManagers;
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\CashOutResource\Pages\ListCashOuts;
+use App\Filament\Resources\CashOutResource\Pages\CreateCashOut;
+use App\Filament\Resources\CashOutResource\Pages\EditCashOut;
 use App\Models\CashOut;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CashOutResource extends Resource
 {
     protected static ?string $model = CashOut::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('expense')
                     ->label('Expense')
                     ->placeholder('Masukkan pengeluaran')
@@ -53,12 +54,12 @@ class CashOutResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])->defaultSort('created_at', 'desc');
     }
@@ -73,9 +74,9 @@ class CashOutResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCashOuts::route('/'),
-            'create' => Pages\CreateCashOut::route('/create'),
-            'edit' => Pages\EditCashOut::route('/{record}/edit'),
+            'index' => ListCashOuts::route('/'),
+            'create' => CreateCashOut::route('/create'),
+            'edit' => EditCashOut::route('/{record}/edit'),
         ];
     }
 }
